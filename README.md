@@ -2,6 +2,7 @@
   <img src="https://img.shields.io/badge/Fintech-Payment%20Gateway-blueviolet?style=for-the-badge&logo=cashapp" alt="Fintech" />
   <img src="https://img.shields.io/badge/Security-HMAC--SHA256%20%7C%20Idempotency-success?style=for-the-badge&logo=shield" alt="Security" />
   <img src="https://img.shields.io/badge/Node.js-Pure%20%28Zero%20Dependencies%29-informational?style=for-the-badge&logo=nodedotjs" alt="Node" />
+  <img src="https://img.shields.io/badge/Business%20Analysis-BRD%20%26%20SRS%20Specs-darkblue?style=for-the-badge&logo=googledocs" alt="BA Specs" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License" />
 </p>
 
@@ -12,32 +13,33 @@
 </h3>
 
 <p align="center">
-  Dự án Case Study kỹ thuật chuyên sâu mô phỏng hoàn chỉnh luồng thanh toán hai chiều giữa <strong>Merchant System</strong> và <strong>Payment Gateway Core</strong>. Thiết kế chuẩn Fintech: bảo mật chữ ký số, cơ chế chống tấn công giả mạo (Anti-Tamper), xử lý bất đồng bộ IPN/Webhook và tính lũy thừa (Idempotency).
+  Dự án Case Study kỹ thuật và phân tích nghiệp vụ Business Analysis (BA) chuyên sâu, mô phỏng hoàn chỉnh luồng thanh toán hai chiều giữa <strong>Merchant System</strong> và <strong>Payment Gateway Core</strong>. Thiết kế chuẩn Fintech: bảo mật chữ ký số, cơ chế chống tấn công giả mạo (Anti-Tamper), xử lý bất đồng bộ IPN/Webhook và tính lũy thừa (Idempotency).
 </p>
 
 ---
 
 ## 📌 Mục Lục
 - [1. Đặt vấn đề & Động lực dự án](#-1-đặt-vấn-đề--động-lực-dự-án)
-- [2. Sơ đồ Kiến trúc & Luồng Dữ liệu (Sequence Flow)](#-2-sơ-đồ-kiến-trúc--luồng-dữ-liệu-sequence-flow)
-- [3. So sánh Hai Kênh: Redirect URL vs. IPN Webhook](#-3-so-sánh-hai-kênh-redirect-url-vs-ipn-webhook)
-- [4. Các Trụ Cột Bảo Mật & Kỹ Thuật Cốt Lõi](#-4-các-trụ-cột-bảo-mật--kỹ-thuật-cốt-lõi)
-  - [4.1 Chuẩn hóa Canonical String & Chữ ký HMAC-SHA256](#41-chuẩn-hóa-canonical-string--chữ-ký-hmac-sha256)
-  - [4.2 Cơ chế chống tấn công đo thời gian (Timing Attack)](#42-cơ-chế-chống-tấn-công-đo-thời-gian-timing-attack)
-  - [4.3 Tính lũy thừa (Idempotency) chống Replay Attack](#43-tính-lũy-thừa-idempotency-chống-replay-attack)
-  - [4.4 Đối soát Số tiền (Amount Mismatch Detection)](#44-đối-soát-số-tiền-amount-mismatch-detection)
-  - [4.5 Bộ sinh mã QR Vector SVG Offline](#45-bộ-sinh-mã-qr-vector-svg-offline)
-- [5. Giả lập Các Ca Lỗi Thanh Toán Nghiệp Vụ (Failure Test Cases)](#-5-giả-lập-các-ca-lỗi-thanh-toán-nghiệp-vụ-failure-test-cases)
-- [6. Cấu trúc Thư mục Dự án](#-6-cấu-trúc-thư-mục-dự-án)
-- [7. Hướng dẫn Cài đặt & Trải nghiệm](#-7-hướng-dẫn-cài-đặt--trải-nghiệm)
-- [8. Đối sánh Đặc tả Kỹ thuật: MoMo vs. ZaloPay](#-8-đối-sánh-đặc-tả-kỹ-thuật-momo-vs-zalopay)
-- [9. Đóng góp & Tác giả](#-9-đóng-góp--tác-giả)
+- [2. Hồ sơ Phân tích Nghiệp vụ (Business Analysis Specification)](#-2-hồ-sơ-phân-tích-nghiệp-vụ-business-analysis-specification)
+- [3. Sơ đồ Kiến trúc & Luồng Dữ liệu (Sequence Flow)](#-3-sơ-đồ-kiến-trúc--luồng-dữ-liệu-sequence-flow)
+- [4. So sánh Hai Kênh: Redirect URL vs. IPN Webhook](#-4-so-sánh-hai-kênh-redirect-url-vs-ipn-webhook)
+- [5. Các Trụ Cột Bảo Mật & Kỹ Thuật Cốt Lõi](#-5-các-trụ-cột-bảo-mật--kỹ-thuật-cốt-lõi)
+  - [5.1 Chuẩn hóa Canonical String & Chữ ký HMAC-SHA256](#51-chuẩn-hóa-canonical-string--chữ-ký-hmac-sha256)
+  - [5.2 Cơ chế chống tấn công đo thời gian (Timing Attack)](#52-cơ-chế-chống-tấn-công-đo-thời-gian-timing-attack)
+  - [5.3 Tính lũy thừa (Idempotency) chống Replay Attack](#53-tính-lũy-thừa-idempotency-chống-replay-attack)
+  - [5.4 Đối soát Số tiền (Amount Mismatch Detection)](#54-đối-soát-số-tiền-amount-mismatch-detection)
+  - [5.5 Bộ sinh mã QR Vector SVG Offline](#55-bộ-sinh-mã-qr-vector-svg-offline)
+- [6. Giả lập Các Ca Lỗi Thanh Toán Nghiệp Vụ (Failure Test Cases)](#-6-giả-lập-các-ca-lỗi-thanh-toán-nghiệp-vụ-failure-test-cases)
+- [7. Cấu trúc Thư mục Dự án](#-7-cấu-trúc-thư-mục-dự-án)
+- [8. Hướng dẫn Cài đặt & Trải nghiệm](#-8-hướng-dẫn-cài-đặt--trải-nghiệm)
+- [9. Đối sánh Đặc tả Kỹ thuật: MoMo vs. ZaloPay](#-9-đối-sánh-đặc-tả-kỹ-thuật-momo-vs-zalopay)
+- [10. Đóng góp & Tác giả](#-10-đóng-góp--tác-giả)
 
 ---
 
 ## 🎯 1. Đặt vấn đề & Động lực dự án
 
-Khi tích hợp các cổng thanh toán ví điện tử hàng đầu tại Việt Nam (như MoMo, ZaloPay, ShopeePay hay VNPay), các kỹ sư thường mắc phải những sai lầm nghiêm trọng sau:
+Khi tích hợp các cổng thanh toán ví điện tử hàng đầu tại Việt Nam (như MoMo, ZaloPay, ShopeePay hay VNPay), các kỹ sư và BA thường gặp phải những bài toán thực tế sau:
 1. **Phụ thuộc vào Return URL (Redirect) để chốt đơn**: Khách thanh toán xong nhưng tắt trình duyệt hoặc mất kết nối mạng trước khi được chuyển hướng về website của Merchant, dẫn đến việc *tiền của khách đã bị trừ nhưng đơn hàng ở hệ thống thì không được duyệt*.
 2. **Không xác thực hoặc xác thực sai Chữ ký số (HMAC-SHA256)**: Payload bị kẻ xấu (Man-in-the-Middle) can thiệp sửa đổi giá trị `amount`, `resultCode` hoặc `orderId` mà hệ thống không phát hiện được.
 3. **Thiếu cơ chế Idempotency**: Khi Gateway retry gửi IPN (do timeout mạng), hệ thống xử lý callback 2 lần gây cộng tiền nhiều lần cho tài khoản hoặc gửi trùng đơn.
@@ -47,7 +49,22 @@ Khi tích hợp các cổng thanh toán ví điện tử hàng đầu tại Vi�
 
 ---
 
-## 🔄 2. Sơ đồ Kiến trúc & Luồng Dữ liệu (Sequence Flow)
+## 📋 2. Hồ sơ Phân tích Nghiệp vụ (Business Analysis Specification)
+
+Dự án bao gồm tài liệu đặc tả nghiệp vụ phân tích theo chuẩn **BABOK**:  
+👉 **[Xem chi tiết tại docs/BUSINESS_ANALYSIS.md](./docs/BUSINESS_ANALYSIS.md)**
+
+Các nội dung chính trong tài liệu BA:
+- **Ma trận Các bên liên quan (Stakeholder Matrix)**: Phân tích góc nhìn của 6 bên (Khách hàng, Kinh doanh, Kế toán, Pháp chế, IT, CSKH).
+- **Yêu cầu chức năng (FR-01 đến FR-07)**: Quy chuẩn từ bước tạo đơn, khóa tồn kho 15 phút, sinh mã QR đến nhận Webhook IPN 3 lớp bảo mật.
+- **Sơ đồ Trạng thái Đơn hàng (State Machine Diagram)**: Quản lý vòng đời đơn (`DRAFT` ➔ `PENDING` ➔ `SUCCESS` / `FAILED` / `EXPIRED`).
+- **Ma trận Xử lý Ngoại lệ (Edge Case Matrix)**: Giải pháp xử lý khi rớt mạng, khi khách thanh toán ở giây thứ 14:59 hoặc khi bị hacker can thiệp giá tiền.
+- **Quy trình Đối soát Tài chính 3 Chiều (3-Way Reconciliation)**: Cơ chế so khớp số liệu định kỳ lúc 01:00 AM giữa Merchant DB, Cổng Ví và Tài khoản Ngân hàng.
+- **Bộ tiêu chí Nghiệm thu (UAT Checklist)**: 6 kịch bản kiểm thử dành cho BA và QA.
+
+---
+
+## 🔄 3. Sơ đồ Kiến trúc & Luồng Dữ liệu (Sequence Flow)
 
 Dưới đây là luồng thanh toán end-to-end chuẩn theo mô hình kiến trúc của MoMo và ZaloPay:
 
@@ -84,7 +101,7 @@ sequenceDiagram
 
 ---
 
-## ⚖️ 3. So sánh Hai Kênh: Redirect URL vs. IPN Webhook
+## ⚖️ 4. So sánh Hai Kênh: Redirect URL vs. IPN Webhook
 
 Hiểu rõ sự khác biệt giữa hai kênh này là quy tắc số 1 trong lập trình cổng thanh toán:
 
@@ -98,9 +115,9 @@ Hiểu rõ sự khác biệt giữa hai kênh này là quy tắc số 1 trong l�
 
 ---
 
-## 🛡️ 4. Các Trụ Cột Bảo Mật & Kỹ Thuật Cốt Lõi
+## 🛡️ 5. Các Trụ Cột Bảo Mật & Kỹ Thuật Cốt Lõi
 
-### 4.1 Chuẩn hóa Canonical String & Chữ ký HMAC-SHA256
+### 5.1 Chuẩn hóa Canonical String & Chữ ký HMAC-SHA256
 Cả MoMo và ZaloPay đều yêu cầu toàn bộ dữ liệu trao đổi phải được ký số nhằm đảm bảo tính toàn vẹn (Integrity) và xác thực nguồn gốc (Authenticity).
 
 1. **Quy tắc Canonicalization**: Các trường dữ liệu (key-value) bắt buộc phải được sắp xếp theo thứ tự bảng chữ cái (*ASCII Alphabetical Order*):
@@ -115,7 +132,7 @@ Cả MoMo và ZaloPay đều yêu cầu toàn bộ dữ liệu trao đổi phả
      .digest('hex');
    ```
 
-### 4.2 Cơ chế chống tấn công đo thời gian (Timing Attack)
+### 5.2 Cơ chế chống tấn công đo thời gian (Timing Attack)
 Khi xác thực chữ ký của đối tác gửi sang, nếu dùng phép so sánh chuỗi thông thường (`sigA === sigB`), máy tính sẽ dừng ngay khi phát hiện ký tự khác nhau đầu tiên. Kẻ tấn công có thể đo thời gian phản hồi (tính bằng microsecond) để đoán dần từng ký tự của chữ ký hợp lệ.
 
 Dự án sử dụng hàm so sánh thời gian bất biến:
@@ -128,7 +145,7 @@ if (expectedBuf.length !== computedBuf.length) return false;
 return crypto.timingSafeEqual(expectedBuf, computedBuf);
 ```
 
-### 4.3 Tính lũy thừa (Idempotency) chống Replay Attack
+### 5.3 Tính lũy thừa (Idempotency) chống Replay Attack
 Nếu Gateway gửi lại webhook do mạng chập chờn, hoặc kẻ xấu cố tình replay gói tin IPN cũ, hệ thống không được phép xử lý cộng tiền lần thứ hai.
 Dự án áp dụng Idempotency Key:
 ```
@@ -137,7 +154,7 @@ IdempotencyKey = "ipn_" + gatewayTransId + "_" + resultCode
 - Khi Webhook tới: Kiểm tra `hasProcessedIdempotencyKey(key)`.
 - Nếu đã tồn tại: Lập tức trả về `HTTP 200 { returnCode: 0, message: "Already processed" }` và dừng thực thi logic kinh doanh.
 
-### 4.4 Đối soát Số tiền (Amount Mismatch Detection)
+### 5.4 Đối soát Số tiền (Amount Mismatch Detection)
 Một lỗ hổng sơ đẳng thường gặp là Merchant chỉ kiểm tra xem `resultCode === 0` (thành công) hay không mà quên kiểm tra số tiền. Kẻ tấn công có thể tạo đơn hàng 1.000.000đ nhưng giả lập hoặc lừa cổng thanh toán gửi IPN cho đơn hàng 1.000đ.
 Dự án cài đặt bước đối soát nghiêm ngặt:
 ```javascript
@@ -147,14 +164,14 @@ if (Number(order.amount) !== Number(ipnPayload.amount)) {
 }
 ```
 
-### 4.5 Bộ sinh mã QR Vector SVG Offline
+### 5.5 Bộ sinh mã QR Vector SVG Offline
 Dự án tự xây dựng thuật toán sinh mã **QR Code Model 2 (Byte Mode, Error Correction Level M)** bằng JavaScript nguyên bản (`src/common/qr.js`):
 - Không phụ thuộc vào thư viện bên thứ ba.
 - Tạo trực tiếp chuỗi SVG siêu nhẹ, sắc nét và hiển thị ngay trên trình duyệt mà không cần kết nối mạng.
 
 ---
 
-## ⚠️ 5. Giả lập Các Ca Lỗi Thanh Toán Nghiệp Vụ (Failure Test Cases)
+## ⚠️ 6. Giả lập Các Ca Lỗi Thanh Toán Nghiệp Vụ (Failure Test Cases)
 
 Để sẵn sàng cho môi trường Production, hệ thống tích hợp sẵn các nút bấm giả lập các trường hợp lỗi thường gặp:
 
@@ -170,14 +187,16 @@ Dự án tự xây dựng thuật toán sinh mã **QR Code Model 2 (Byte Mode, E
 
 ---
 
-## 📂 6. Cấu trúc Thư mục Dự án
+## 📂 7. Cấu trúc Thư mục Dự án
 
 ```
 e-wallet-payment-simulator/
 ├── server.js               # Entry point chạy cả 2 server đồng thời (:3000 & :4000)
 ├── test-unit.js            # Bộ kiểm thử tự động thuật toán HMAC & State Machine
 ├── package.json            # Thông tin metadata dự án
-├── README.md               # Tài liệu Case Study chuyên sâu
+├── README.md               # Tài liệu Case Study Kỹ thuật
+├── docs/
+│   └── BUSINESS_ANALYSIS.md # Tài liệu Phân tích Nghiệp vụ chuyên sâu (BRD/SRS)
 └── src/
     ├── common/             # Thư viện lõi dùng chung
     │   ├── config.js       # Secret key, cấu hình cổng & danh mục mã lỗi chuẩn
@@ -193,7 +212,7 @@ e-wallet-payment-simulator/
 
 ---
 
-## 🚀 7. Hướng dẫn Cài đặt & Trải nghiệm
+## 🚀 8. Hướng dẫn Cài đặt & Trải nghiệm
 
 Dự án chạy trên **Node.js (phiên bản 18+ trở lên)** mà **không cần chạy `npm install`** bất kỳ package nào.
 
@@ -234,7 +253,7 @@ Kết quả kiểm thử 5 ca bảo mật:
 
 ---
 
-## 📑 8. Đối sánh Đặc tả Kỹ thuật: MoMo vs. ZaloPay
+## 📑 9. Đối sánh Đặc tả Kỹ thuật: MoMo vs. ZaloPay
 
 | Tiêu Chí Kỹ Thuật | MoMo Payment API (v2) | ZaloPay Payment API (v2) | Mô Hình Simulator Này |
 | :--- | :--- | :--- | :--- |
@@ -247,9 +266,10 @@ Kết quả kiểm thử 5 ca bảo mật:
 
 ---
 
-## 👨‍💻 9. Đóng góp & Tác giả
+## 👨‍💻 10. Đóng góp & Tác giả
 
-Dự án được xây dựng với mục tiêu giáo dục, chia sẻ kiến thức cộng đồng và làm tài liệu minh họa kiến trúc cho các buổi phỏng vấn vị trí **Backend / Fullstack / Solution Architect trong ngành Fintech**.
+Dự án được xây dựng với mục tiêu giáo dục, chia sẻ kiến thức cộng đồng và làm tài liệu minh họa kiến trúc cho các buổi phỏng vấn vị trí **Backend / Fullstack / Solution Architect / Business Analyst trong ngành Fintech**.
 
+- Tác giả: **[Phan Phúc Đạt](https://github.com/phucdatphan)**
 - Nếu thấy hữu ích, hãy tặng dự án một ⭐️ **Star** trên GitHub!
 - Giấy phép phân phối: **MIT License**.
