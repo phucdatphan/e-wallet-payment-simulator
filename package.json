@@ -1,0 +1,26 @@
+{
+  "name": "e-wallet-payment-simulator",
+  "version": "1.0.0",
+  "description": "Production-grade End-to-End E-Wallet Payment Flow Simulator (MoMo & ZaloPay architecture)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "fintech",
+    "payment-gateway",
+    "momo",
+    "zalopay",
+    "ipn",
+    "webhook",
+    "hmac-sha256",
+    "architecture-study"
+  ],
+  "author": "Engineering Showcase",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "qrcode": "^1.5.3"
+  }
+}
