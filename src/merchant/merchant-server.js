@@ -403,7 +403,7 @@ app.get('/order-result', (req, res) => {
 const server = http.createServer((req, res) => app.handle(req, res));
 
 function startMerchantServer() {
-  server.listen(config.MERCHANT.PORT, () => {
+  server.listen(config.MERCHANT.PORT, '0.0.0.0', () => {
     console.log(`[MERCHANT] 🟢 Merchant Web Store listening on http://localhost:${config.MERCHANT.PORT}`);
   });
 }

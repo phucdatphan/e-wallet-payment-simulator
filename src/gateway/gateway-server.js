@@ -407,7 +407,7 @@ app.post('/v2/gateway/pay/query', (req, res) => {
 const server = http.createServer((req, res) => app.handle(req, res));
 
 function startGatewayServer() {
-  server.listen(config.GATEWAY.PORT, () => {
+  server.listen(config.GATEWAY.PORT, '0.0.0.0', () => {
     console.log(`[GATEWAY] 🟢 Mock Payment Gateway Core listening on http://localhost:${config.GATEWAY.PORT}`);
   });
 }

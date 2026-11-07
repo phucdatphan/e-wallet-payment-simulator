@@ -6,16 +6,16 @@ module.exports = {
     PORT: 3000,
     APP_ID: 'MERCHANT_DEMO_2026',
     SECRET_KEY: 'secret_merchant_momo_zalopay_2026_demo_key',
-    BASE_URL: 'http://localhost:3000',
-    IPN_ENDPOINT: 'http://localhost:3000/api/payment/callback',
-    REDIRECT_ENDPOINT: 'http://localhost:3000/order-result',
+    BASE_URL: 'http://127.0.0.1:3000',
+    IPN_ENDPOINT: 'http://127.0.0.1:3000/api/payment/callback',
+    REDIRECT_ENDPOINT: 'http://127.0.0.1:3000/order-result',
   },
   GATEWAY: {
     PORT: 4000,
     GATEWAY_ID: 'VN_EWALLET_CORE_ENGINE',
     SECRET_KEY: 'secret_merchant_momo_zalopay_2026_demo_key', // Pre-shared symmetric key
-    BASE_URL: 'http://localhost:4000',
-    CREATE_PAYMENT_URL: 'http://localhost:4000/v2/gateway/pay/create',
+    BASE_URL: 'http://127.0.0.1:4000',
+    CREATE_PAYMENT_URL: 'http://127.0.0.1:4000/v2/gateway/pay/create',
   },
   ORDER_STATUS: {
     PENDING: 'PENDING',
