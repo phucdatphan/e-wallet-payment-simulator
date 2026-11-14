@@ -1,4 +1,4 @@
-# Chuỗi 3 Dự Án Liên Hoàn (3 Stages) — Hệ Thống Thanh Toán Ví Điện Tử
+# Chuỗi Dự án— Hệ Thống Thanh Toán Ví Điện Tử
 
 > **Mô hình**: 3 Giai đoạn (Stages) nối tiếp nhau theo vòng đời sản phẩm thực tế (End-to-End Product Lifecycle) kết hợp **Agile / Scrum**.  
 > **Điểm liên kết**: Đầu ra (Output) của giai đoạn trước là đầu vào (Input) trực tiếp của giai đoạn sau.
