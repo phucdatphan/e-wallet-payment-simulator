@@ -13,7 +13,7 @@
 </h3>
 
 <p align="center">
-  Dự án Case Study kỹ thuật và phân tích nghiệp vụ Business Analysis (BA) chuyên sâu, mô phỏng hoàn chỉnh luồng thanh toán hai chiều giữa <strong>Merchant System</strong> và <strong>Payment Gateway Core</strong>. Thiết kế chuẩn Fintech: bảo mật chữ ký số, cơ chế chống tấn công giả mạo (Anti-Tamper), xử lý bất đồng bộ IPN/Webhook và tính lũy thừa (Idempotency).
+  Dự án Case Study kỹ thuật và phân tích nghiệp vụ Business Analysis (BA) chuyên sâu, mô phỏng hoàn chỉnh luồng thanh toán hai chiều giữa <strong>Merchant System</strong> và <strong>Payment Gateway Core</strong>. Thiết kế Fintech: bảo mật chữ ký số, cơ chế chống tấn công giả mạo (Anti-Tamper), xử lý bất đồng bộ IPN/Webhook và tính lũy thừa (Idempotency).
 </p>
 
 ---
